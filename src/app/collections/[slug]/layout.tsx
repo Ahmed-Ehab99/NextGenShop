@@ -21,7 +21,7 @@ export default function Layout({ children, params }: LayoutProps) {
 
 async function CollectionsLayout({ children, params }: LayoutProps) {
   const { slug } = await params;
-  const collection = await getCollectionBySlug(getWixServerClient(), slug);
+  const collection = await getCollectionBySlug(await getWixServerClient(), slug);
   if (!collection) notFound();
   const banner = collection.media?.mainMedia?.image;
   return (
