@@ -17,7 +17,10 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const collection = await getCollectionBySlug(getWixServerClient(), slug);
+  const collection = await getCollectionBySlug(
+    await getWixServerClient(),
+    slug,
+  );
   if (!collection) notFound();
   const banner = collection.media?.mainMedia?.image;
   return {
@@ -32,7 +35,10 @@ export async function generateMetadata({
 export default async function Page({ params, searchParams }: PageProps) {
   const { page } = await searchParams;
   const { slug } = await params;
-  const collection = await getCollectionBySlug(getWixServerClient(), slug);
+  const collection = await getCollectionBySlug(
+    await getWixServerClient(),
+    slug,
+  );
   if (!collection?._id) notFound();
   return (
     <div className="space-y-5">
@@ -51,7 +57,7 @@ interface ProductsProps {
 
 async function Products({ collectionId, page }: ProductsProps) {
   const pageSize = 8;
-  const collectionProducts = await queryProducts(getWixServerClient(), {
+  const collectionProducts = await queryProducts(await getWixServerClient(), {
     collectionIds: collectionId,
     limit: pageSize,
     skip: (page - 1) * pageSize,
