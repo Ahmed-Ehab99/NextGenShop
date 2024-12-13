@@ -9,13 +9,14 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
 interface PageProps {
-  params: { slug: string };
-  searchParams: { page?: string };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ page?: string }>;
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params,
 }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const collection = await getCollectionBySlug(getWixServerClient(), slug);
   if (!collection) notFound();
   const banner = collection.media?.mainMedia?.image;
@@ -28,17 +29,16 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({
-  params: { slug },
-  searchParams: { page = "1" },
-}: PageProps) {
+export default async function Page({ params, searchParams }: PageProps) {
+  const { page } = await searchParams;
+  const { slug } = await params;
   const collection = await getCollectionBySlug(getWixServerClient(), slug);
   if (!collection?._id) notFound();
   return (
     <div className="space-y-5">
       <h2 className="text-2xl font-bold">Products</h2>
       <Suspense fallback={<LoadingSkeleton />} key={page}>
-        <Products collectionId={collection._id} page={parseInt(page)} />
+        <Products collectionId={collection._id} page={parseInt(page || "1")} />
       </Suspense>
     </div>
   );
