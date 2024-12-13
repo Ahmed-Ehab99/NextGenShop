@@ -15,12 +15,13 @@ import ProductReviews, {
 } from "./ProductReviews";
 
 interface PageProps {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
 export async function generateMetadata({
-  params: { slug },
+  params,
 }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
   const product = await getProductBySlug(getWixServerClient(), slug);
   if (!product) notFound();
   const mainImage = product.media?.mainMedia?.image;
@@ -42,7 +43,8 @@ export async function generateMetadata({
   };
 }
 
-export default async function Page({ params: { slug } }: PageProps) {
+export default async function Page({ params }: PageProps) {
+  const { slug } = await params;
   const product = await getProductBySlug(getWixServerClient(), slug);
   if (!product?._id) notFound();
   return (
