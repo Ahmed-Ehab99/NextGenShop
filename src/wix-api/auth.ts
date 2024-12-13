@@ -16,12 +16,10 @@ export async function getLoginUrl(wixClient: WixClient, oAuthData: OauthData) {
   const { authUrl } = await wixClient.auth.getAuthUrl(oAuthData, {
     responseMode: "query",
   });
-
   return authUrl;
 }
 
 export async function getLogoutUrl(wixClient: WixClient) {
   const { logoutUrl } = await wixClient.auth.logout(env.NEXT_PUBLIC_BASE_URL);
-
   return logoutUrl;
 }
