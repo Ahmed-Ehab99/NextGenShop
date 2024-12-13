@@ -7,13 +7,13 @@ import { cache } from "react";
 import { WIX_SESSION_COOKIE } from "./constants";
 import { getWixClient } from "./wix-client.base";
 
-export const getWixServerClient = cache(() => {
+export const getWixServerClient = async () => {
   let tokens: Tokens | undefined;
   try {
-    tokens = JSON.parse(cookies().get(WIX_SESSION_COOKIE)?.value || "{}");
+    tokens = JSON.parse((await cookies()).get(WIX_SESSION_COOKIE)?.value || "{}");
   } catch (error) {}
   return getWixClient(tokens);
-});
+};
 
 export const getWixAdminClient = cache(() => {
   const wixClient = createClient({

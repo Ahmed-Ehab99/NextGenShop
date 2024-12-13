@@ -13,7 +13,7 @@ import MobileMenu from "./MobileMenu";
 import { Suspense } from "react";
 
 export default async function Navbar() {
-  const wixClient = getWixServerClient();
+  const wixClient = await getWixServerClient();
   const [cart, loggedInMember, collections] = await Promise.all([
     getCart(wixClient),
     getLoggedInMember(wixClient),
