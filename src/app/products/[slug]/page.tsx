@@ -22,7 +22,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = await getProductBySlug(getWixServerClient(), slug);
+  const product = await getProductBySlug(await getWixServerClient(), slug);
   if (!product) notFound();
   const mainImage = product.media?.mainMedia?.image;
   return {
@@ -45,7 +45,7 @@ export async function generateMetadata({
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params;
-  const product = await getProductBySlug(getWixServerClient(), slug);
+  const product = await getProductBySlug(await getWixServerClient(), slug);
   if (!product?._id) notFound();
   return (
     <main className="mx-auto max-w-7xl space-y-10 px-5 py-10">
@@ -71,7 +71,7 @@ interface RelatedProductsProps {
 
 async function RelatedProducts({ productId }: RelatedProductsProps) {
   const relatedProducts = await getRelatedProducts(
-    getWixServerClient(),
+    await getWixServerClient(),
     productId,
   );
 
@@ -106,10 +106,10 @@ interface ProductReviewsSectionProps {
 async function ProductReviewsSection({ product }: ProductReviewsSectionProps) {
   if (!product._id) return null;
   const wixClient = getWixServerClient();
-  const loggedInMember = await getLoggedInMember(wixClient);
+  const loggedInMember = await getLoggedInMember(await wixClient);
   const existingReview = loggedInMember?.contactId
     ? (
-        await getProductReviews(wixClient, {
+        await getProductReviews(await wixClient, {
           productId: product._id,
           contactId: loggedInMember.contactId,
         })
