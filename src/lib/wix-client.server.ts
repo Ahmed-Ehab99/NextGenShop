@@ -10,7 +10,9 @@ import { getWixClient } from "./wix-client.base";
 export const getWixServerClient = async () => {
   let tokens: Tokens | undefined;
   try {
-    tokens = JSON.parse((await cookies()).get(WIX_SESSION_COOKIE)?.value || "{}");
+    tokens = JSON.parse(
+      (await cookies()).get(WIX_SESSION_COOKIE)?.value || "{}",
+    );
   } catch (error) {}
   return getWixClient(tokens);
 };

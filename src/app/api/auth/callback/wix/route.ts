@@ -19,11 +19,9 @@ export async function GET(req: NextRequest) {
     return new Response("Invalid request", { status: 400 });
   }
   const wixClient = getWixServerClient();
-  const memberTokens = await (await wixClient).auth.getMemberTokens(
-    code,
-    state,
-    oAuthData,
-  );
+  const memberTokens = await (
+    await wixClient
+  ).auth.getMemberTokens(code, state, oAuthData);
   (await cookies()).delete(WIX_OAUTH_DATA_COOKIE);
   (await cookies()).set(WIX_SESSION_COOKIE, JSON.stringify(memberTokens), {
     maxAge: 60 * 60 * 24 * 14,

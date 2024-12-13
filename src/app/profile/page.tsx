@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const member = await getLoggedInMember(getWixServerClient());
+  const member = await getLoggedInMember(await getWixServerClient());
   if (!member) notFound();
   return (
     <main className="mx-auto max-w-7xl space-y-10 px-5 py-10">
