@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     return new Response(error_description, { status: 400 });
   }
   const oAuthData: OauthData = JSON.parse(
-    cookies().get(WIX_OAUTH_DATA_COOKIE)?.value || "{}",
+    (await cookies()).get(WIX_OAUTH_DATA_COOKIE)?.value || "{}",
   );
   if (!code || !state || !oAuthData) {
     return new Response("Invalid request", { status: 400 });
@@ -24,8 +24,8 @@ export async function GET(req: NextRequest) {
     state,
     oAuthData,
   );
-  cookies().delete(WIX_OAUTH_DATA_COOKIE);
-  cookies().set(WIX_SESSION_COOKIE, JSON.stringify(memberTokens), {
+  (await cookies()).delete(WIX_OAUTH_DATA_COOKIE);
+  (await cookies()).set(WIX_SESSION_COOKIE, JSON.stringify(memberTokens), {
     maxAge: 60 * 60 * 24 * 14,
     secure: process.env.NODE_ENV === "production",
   });
