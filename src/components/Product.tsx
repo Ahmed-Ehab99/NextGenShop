@@ -12,7 +12,6 @@ interface ProductProps {
 
 export default function Product({ product }: ProductProps) {
   const mainImage = product.media?.mainMedia?.image;
-
   return (
     <Link href={`/products/${product.slug}`} className="h-full border bg-card">
       <div className="relative overflow-hidden">

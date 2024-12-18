@@ -46,7 +46,6 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     );
     return selectedChoice?.media?.items ?? [];
   });
-
   return (
     <div className="flex flex-col gap-10 md:flex-row lg:gap-20">
       <ProductMedia

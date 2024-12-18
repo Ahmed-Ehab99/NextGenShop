@@ -19,7 +19,6 @@ export default async function Navbar() {
     getLoggedInMember(wixClient),
     getCollections(wixClient),
   ]);
-
   return (
     <header className="bg-background shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 p-5">

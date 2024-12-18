@@ -21,7 +21,7 @@ const queryKey: QueryKey = ["cart"];
 
 export function useCart(initialData: currentCart.Cart | null) {
   return useQuery({
-    queryKey: ["cart"],
+    queryKey,
     queryFn: () => getCart(wixBrowserClient),
     initialData,
   });

@@ -36,5 +36,5 @@ export default function WixImage({
         )
       : wixMedia.getImageUrl(mediaIdentifier).url
     : placeholder;
-  return <img src={imageUrl} alt={alt || ""} {...props} />;
+  return <img src={imageUrl} alt={alt || ""} {...props} loading="lazy" />;
 }

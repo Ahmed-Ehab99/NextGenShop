@@ -7,6 +7,5 @@ interface DiscountBadgeProps {
 
 export default function DiscountBadge({ data }: DiscountBadgeProps) {
   if (data.type !== "PERCENT") return null;
-
   return <Badge>-{data.value}%</Badge>;
 }
